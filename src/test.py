@@ -24,6 +24,12 @@ async def test_rgb_mixer(dut):
     dut.rst_n.value = 0
     await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
+    dut.enc0_a.value = 0
+    dut.enc0_b.value = 0
+    dut.enc1_a.value = 0
+    dut.enc1_b.value = 0
+    dut.enc2_a.value = 0
+    dut.enc2_b.value = 0
     await ClockCycles(dut.clk, 1000)
 
     encoder0 = Encoder(dut.clk, dut.enc0_a, dut.enc0_b, clocks_per_phase = clocks_per_phase, noise_cycles = clocks_per_phase / 4)
@@ -43,7 +49,7 @@ async def test_rgb_mixer(dut):
 
     # sync to pwm
     await RisingEdge(dut.pwm0_out)
-    await FallingEdge(dut.clk)
+    await RisingEdge(dut.clk)
 
     # pwm should all be on for max_count 
     for i in range(max_count): 
