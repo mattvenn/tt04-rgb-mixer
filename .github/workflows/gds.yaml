@@ -27,7 +27,19 @@ jobs:
 
       - name: GL test
         uses: TinyTapeout/tt-gds-action/gl_test@tt04
-    
+
+  eqy_test:
+    needs: gds
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: eqy test
+        uses: TinyTapeout/tt-gds-action/eqy_test@eqy-devel
+
   viewer:
     needs: gds
     runs-on: ubuntu-latest
