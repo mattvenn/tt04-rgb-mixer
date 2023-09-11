@@ -1,0 +1,23 @@
+[gold]
+read_verilog -sv debounce.v \
+    encoder.v \
+    pwm.v \
+    rgb_mixer.v \
+    tt_um_rgb_mixer.v
+
+[gate]
+exec -- python3 formal_pdk_proc.py primitives.v sky130_fd_sc_hd.v -o formal_pdk.v
+read -sv formal_pdk.v gate_level_netlist.v
+
+[script]
+hierarchy -check -top tt_um_rgb_mixer
+prep
+async2sync
+
+[strategy sat]
+use sat
+depth 5
+
+[strategy pdr]
+use sby
+engine abc pdr -rfi
