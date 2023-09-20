@@ -38,7 +38,7 @@ jobs:
           submodules: recursive
 
       - name: eqy test
-        uses: TinyTapeout/tt-gds-action/eqy_test@eqy-devel
+        uses: TinyTapeout/tt-gds-action/eqy_test@tt05
 
   viewer:
     needs: gds
