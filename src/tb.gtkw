@@ -1,47 +1,50 @@
 [*]
 [*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
-[*] Mon Aug 21 15:18:11 2023
+[*] Mon Oct 16 11:40:46 2023
 [*]
 [dumpfile] "/home/matt/work/asic-workshop/shuttle-2309C/tt04-rgb-mixer/src/tb.vcd"
-[dumpfile_mtime] "Mon Aug 21 15:17:27 2023"
-[dumpfile_size] 68377
+[dumpfile_mtime] "Mon Oct 16 11:39:43 2023"
+[dumpfile_size] 1322157
 [savefile] "/home/matt/work/asic-workshop/shuttle-2309C/tt04-rgb-mixer/src/tb.gtkw"
 [timestart] 0
-[size] 2286 1260
+[size] 2496 1360
 [pos] -1 -1
-*-33.900002 4730000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-34.200001 10500000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb.
 [treeopen] tb.tt_um_rgb_mixer.
 [treeopen] tb.tt_um_rgb_mixer.rgb_mixer.
 [sst_width] 343
 [signals_width] 414
 [sst_expanded] 1
-[sst_vpaned_height] 387
+[sst_vpaned_height] 371
 @28
 tb.rst_n
 tb.clk
-@22
-tb.segments[6:0]
-@c00022
-tb.uio_out[7:0]
+@800200
+-debug
 @28
-(0)tb.uio_out[7:0]
-(1)tb.uio_out[7:0]
-(2)tb.uio_out[7:0]
-(3)tb.uio_out[7:0]
-(4)tb.uio_out[7:0]
-(5)tb.uio_out[7:0]
-(6)tb.uio_out[7:0]
-(7)tb.uio_out[7:0]
+tb.enc_sel[1:0]
+tb.debounce_a
+tb.debounce_b
+tb.enc_sel[1:0]
+@c00022
+tb.enc_val[7:0]
+@28
+(0)tb.enc_val[7:0]
+(1)tb.enc_val[7:0]
+(2)tb.enc_val[7:0]
+(3)tb.enc_val[7:0]
+(4)tb.enc_val[7:0]
+(5)tb.enc_val[7:0]
+(6)tb.enc_val[7:0]
+(7)tb.enc_val[7:0]
 @1401200
 -group_end
-@22
-tb.ui_in[7:0]
-tb.tt_um_rgb_mixer.uo_out[7:0]
-tb.tt_um_rgb_mixer.rgb_mixer.pwm0.count[7:0]
+@1000200
+-debug
 @28
-tb.tt_um_rgb_mixer.rgb_mixer.pwm0.pwm_on
-@29
-tb.tt_um_rgb_mixer.rgb_mixer.pwm0.out
+tb.pwm0_out
+tb.pwm1_out
+tb.pwm2_out
 [pattern_trace] 1
 [pattern_trace] 0

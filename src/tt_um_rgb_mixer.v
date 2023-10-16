@@ -13,13 +13,11 @@ module tt_um_rgb_mixer (
 
     wire reset = ! rst_n;
 
-    // set all bidirectional as inputs
-    assign uio_oe = 8'b00000000;
-    // set all unused outputs to low
-    assign uio_out = 8'b00000000;
+    // set all bidirectional as outputs
+    assign uio_oe = 8'hff;
 
     // assign all unused outputs
-    assign uo_out[7:3] = 5'b00000;
+    assign uo_out[7:5] = 5'b000;
 
     rgb_mixer rgb_mixer (
         .clk    (clk),
@@ -30,6 +28,10 @@ module tt_um_rgb_mixer (
         .enc1_b (ui_in[3]),
         .enc2_a (ui_in[4]),
         .enc2_b (ui_in[5]),
+        .enc_sel (ui_in[7:6]),
+        .enc_val (uio_out),
+        .debounce_a (uo_out[3]),
+        .debounce_b (uo_out[4]),
         .pwm0_out (uo_out[0]),
         .pwm1_out (uo_out[1]),
         .pwm2_out (uo_out[2])

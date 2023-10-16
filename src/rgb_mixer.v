@@ -9,6 +9,10 @@ module rgb_mixer (
     input enc1_b,
     input enc2_a,
     input enc2_b,
+    input [1:0] enc_sel,
+    output reg [7:0] enc_val,
+    output reg debounce_a,
+    output reg debounce_b,
     output pwm0_out,
     output pwm1_out,
     output pwm2_out
@@ -17,6 +21,14 @@ module rgb_mixer (
     wire enc1_a_db, enc1_b_db;
     wire enc2_a_db, enc2_b_db;
     wire [7:0] enc0, enc1, enc2;
+
+    always @(*) begin
+        case(enc_sel)
+            2'b00: begin enc_val = enc0; debounce_a = enc0_a_db; debounce_b = enc0_b_db; end
+            2'b01: begin enc_val = enc1; debounce_a = enc1_a_db; debounce_b = enc1_b_db; end 
+            2'b10: begin enc_val = enc2; debounce_a = enc2_a_db; debounce_b = enc2_b_db; end
+        endcase
+    end
 
     // debouncers, 2 for each encoder
     debounce #(.HIST_LEN(8)) debounce0_a(.clk(clk), .reset(reset), .button(enc0_a), .debounced(enc0_a_db));

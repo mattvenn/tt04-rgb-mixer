@@ -5,13 +5,18 @@ from encoder import Encoder
 
 clocks_per_phase = 10
 
-async def run_encoder_test(encoder, max_count):
+async def run_encoder_test(dut, encoder, max_count):
+    count = 0
     for i in range(clocks_per_phase * 2 * max_count):
         await encoder.update(1)
+        if (i+clocks_per_phase) % (2*clocks_per_phase) == 0:
+            assert count == int(dut.enc_val.value)
+            count += 1
 
     # let noisy transition finish, otherwise can get an extra count
     for i in range(10):
         await encoder.update(0)
+
     
 @cocotb.test()
 async def test_rgb_mixer(dut):
@@ -30,7 +35,7 @@ async def test_rgb_mixer(dut):
     dut.enc1_b.value = 0
     dut.enc2_a.value = 0
     dut.enc2_b.value = 0
-    await ClockCycles(dut.clk, 1000)
+    await ClockCycles(dut.clk, 10)
 
     encoder0 = Encoder(dut.clk, dut.enc0_a, dut.enc0_b, clocks_per_phase = clocks_per_phase, noise_cycles = clocks_per_phase / 4)
     encoder1 = Encoder(dut.clk, dut.enc1_a, dut.enc1_b, clocks_per_phase = clocks_per_phase, noise_cycles = clocks_per_phase / 4)
@@ -43,9 +48,14 @@ async def test_rgb_mixer(dut):
 
     # do 3 ramps for each encoder 
     max_count = 255
-    await run_encoder_test(encoder0, max_count)
-    await run_encoder_test(encoder1, max_count)
-    await run_encoder_test(encoder2, max_count)
+
+    # set the encoder to appear on the debug output so we can check the value is correct
+    dut.enc_sel.value = 0
+    await run_encoder_test(dut, encoder0, max_count)
+    dut.enc_sel.value = 1
+    await run_encoder_test(dut, encoder1, max_count)
+    dut.enc_sel.value = 2
+    await run_encoder_test(dut, encoder2, max_count)
 
     # sync to pwm
     await RisingEdge(dut.pwm0_out)

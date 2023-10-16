@@ -23,13 +23,16 @@ module tb ();
     reg  enc0_a, enc0_b, enc1_a, enc1_b, enc2_a, enc2_b;
     reg  [7:0] uio_in;
 
+    wire [7:0] enc_val;
+    reg  [1:0] enc_sel;
     wire [7:0] uo_out;
-    wire [7:0] uio_out;
     wire [7:0] uio_oe;
 
     wire pwm0_out = uo_out[0];
     wire pwm1_out = uo_out[1];
     wire pwm2_out = uo_out[2];
+    wire debounce_a = uo_out[3];
+    wire debounce_b = uo_out[4];
 
     tt_um_rgb_mixer tt_um_rgb_mixer (
     // include power ports for the Gate Level test
@@ -37,10 +40,10 @@ module tb ();
         .VPWR( 1'b1),
         .VGND( 1'b0),
     `endif
-        .ui_in      ({2'b0, enc2_b, enc2_a, enc1_b, enc1_a, enc0_b, enc0_a}),    // Dedicated inputs
+        .ui_in      ({enc_sel, enc2_b, enc2_a, enc1_b, enc1_a, enc0_b, enc0_a}),    // Dedicated inputs
         .uo_out     (uo_out),   // Dedicated outputs
         .uio_in     (uio_in),   // IOs: Input path
-        .uio_out    (uio_out),  // IOs: Output path
+        .uio_out    (enc_val),  // IOs: Output path
         .uio_oe     (uio_oe),   // IOs: Enable path (active high: 0=input, 1=output)
         .ena        (ena),      // enable - goes high when design is selected
         .clk        (clk),      // clock
